@@ -66,9 +66,9 @@ body {
 }
 
 .logo-img, .sidebar-logo {
-    height: 40px;
+    font-size: 2rem; /* Tamanho do ícone */
+    color: var(--primary);
     margin-right: 1rem;
-    border-radius: 50%;
 }
 
 .nav .btn {
@@ -139,6 +139,12 @@ body {
     border-radius: 8px;
     box-shadow: var(--shadow);
     transition: transform 0.3s;
+    text-align: center;
+}
+
+.feature-card i {
+    color: var(--primary);
+    margin-bottom: 1rem;
 }
 
 .feature-card:hover {
@@ -290,12 +296,17 @@ body {
     animation: slideIn 0.5s ease-in;
 }
 
-.profile-avatar img {
+.profile-avatar img, .profile-avatar i {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     border: 3px solid var(--primary);
     margin-bottom: 1rem;
+    font-size: 3rem; /* Tamanho do ícone de avatar padrão */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--secondary);
 }
 
 .profile-details p {
