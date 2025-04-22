@@ -10,11 +10,14 @@
     <meta property="og:title" content="Login - BatePonto Web Premium">
     <meta property="og:description" content="Acesse o sistema com sua conta Discord.">
     <meta property="og:url" content="https://bate-ponto-web.pages.dev/login.html">
-    <meta property="og:image" content="https://bate-ponto-web.pages.dev/images/logo.png">
+    <meta property="og:image" content="https://fontawesome.com/images/favicon/apple-touch-icon.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://bate-ponto-web.pages.dev/images/logo.png">
+    <meta name="twitter:image" content="https://fontawesome.com/images/favicon/apple-touch-icon.png">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" href="/images/favicon.ico">
+    <!-- Favicon usando SVG do Font Awesome -->
+    <link rel="icon" type="image/svg+xml" href="https://fontawesome.com/icons/clock?f=classic&s=solid">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -23,7 +26,7 @@
     </div>
     <header class="header">
         <div class="logo">
-            <img src="/images/logo.png" alt="BatePonto Web Premium Logo" class="logo-img">
+            <i class="fa-solid fa-clock logo-img"></i>
             <h1>Login</h1>
         </div>
     </header>
@@ -33,9 +36,7 @@
                 <h2>Conecte-se com Discord</h2>
                 <p>Use sua conta Discord para acessar o BatePonto Web Premium.</p>
                 <button onclick="initiateDiscordLogin()" class="btn btn-discord">
-                    <svg class="discord-icon" viewBox="0 0 24 24">
-                        <path d="M20.317 4.369a19.791 19.791 0 0 0-4.885-1.515 0.074 0.074 0 0 0-.078 0.037c-0.211 0.375-0.444 0.864-0.608 1.249a18.316 18.316 0 0 0-5.477 0c-0.164-0.385-0.397-0.874-0.608-1.249a0.074 0.074 0 0 0-.078-.037 19.791 19.791 0 0 0-4.885 1.515 20.154 20.154 0 0 0-6.35 14.285 0.075 0.075 0 0 0 0.041 0.066 19.915 19.915 0 0 0 5.957 3.015 0.075 0.075 0 0 0 0.084-.029c0.461-0.63 0.874-1.295 1.226-1.996a0.075 0.075 0 0 0-.041-.1 13.107 13.107 0 0 1-1.872-.892 0.075 0.075 0 0 0-.019-.089 0.076 0.076 0 0 0-.09-.009c-0.119 0.089-0.239 0.179-0.359 0.268a0.075 0.075 0 0 0-.029 0.089c0.239 0.716 0.537 1.403 0.896 2.045a0.075 0.075 0 0 0 0.084 0.029 19.915 19.915 0 0 0 5.957-3.015 0.075 0.075 0 0 0 0.041-.066 20.154 20.154 0 0 0-6.35-14.285z"/>
-                    </svg>
+                    <i class="fab fa-discord discord-icon"></i>
                     Login com Discord
                 </button>
             </div>
