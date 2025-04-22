@@ -23,7 +23,16 @@ async function fetchUserData() {
         document.getElementById('discord_id').textContent = user.discord_id;
         document.getElementById('email').textContent = user.email || 'Não fornecido';
         document.getElementById('created_at').textContent = new Date(user.created_at).toLocaleDateString('pt-BR');
-        document.getElementById('avatar').src = user.avatar ? `https://cdn.discordapp.com/avatars/${user.discord_id}/${user.avatar}.png` : '/images/default-avatar.png';
+        const avatarElement = document.getElementById('avatar');
+        if (user.avatar) {
+            avatarElement.tagName === 'IMG' ?
+                avatarElement.src = `https://cdn.discordapp.com/avatars/${user.discord_id}/${user.avatar}.png` :
+                avatarElement.outerHTML = `<img id="avatar" src="https://cdn.discordapp.com/avatars/${user.discord_id}/${user.avatar}.png" alt="Avatar">`;
+        } else {
+            avatarElement.tagName === 'I' ?
+                avatarElement.className = 'fas fa-user-circle' :
+                avatarElement.outerHTML = `<i id="avatar" class="fas fa-user-circle"></i>`;
+        }
         if (user.is_admin || user.is_server_admin) {
             document.getElementById('admin-link').style.display = 'block';
         }
