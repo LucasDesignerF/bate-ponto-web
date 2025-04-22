@@ -190,6 +190,22 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    width: 100%; /* Ocupa toda a largura do cartão */
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.btn-discord .discord-icon {
+    font-size: 1.5rem; /* Tamanho do ícone */
+    color: white;
+}
+
+.btn-discord:hover {
+    background: #677BC4;
+    transform: translateY(-2px);
 }
 
 .btn-primary {
