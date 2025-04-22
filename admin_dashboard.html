@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Administrador - BatePonto Web Premium</title>
+    <meta name="description" content="Gerencie servidores, usuários e bate-pontos no BatePonto Web Premium como administrador.">
+    <meta name="keywords" content="dashboard, administrador, servidores, usuarios, ponto web, discord, rede bots, premium">
+    <meta name="author" content="Lucas Dev, Rede Bots">
+    <meta property="og:title" content="Dashboard do Administrador - BatePonto Web Premium">
+    <meta property="og:description" content="Controle total de servidores, usuários e bate-pontos no BatePonto Web Premium.">
+    <meta property="og:url" content="https://bate-ponto-web.pages.dev/admin_dashboard.html">
+    <meta property="og:image" content="https://bate-ponto-web.pages.dev/images/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bate-ponto-web.pages.dev/images/logo.png">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="theme-toggle-btn" aria-label="Alternar tema">🌙</button>
+    </div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/images/logo.png" alt="BatePonto Logo" class="sidebar-logo">
+            <h2>BatePonto</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/user_dashboard.html" class="sidebar-item">Dashboard</a>
+            <a href="/admin_dashboard.html" class="sidebar-item active" aria-current="page">Admin</a>
+            <button onclick="logout()" class="sidebar-item btn-logout">Sair</button>
+        </nav>
+    </div>
+    <main class="main dashboard">
+        <header class="dashboard-header">
+            <h1>Dashboard do Administrador</h1>
+        </header>
+        <section class="stats">
+            <h3>Estatísticas</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total de Pontos</h4>
+                    <p id="total-points">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Usuários Ativos</h4>
+                    <p id="active-users">0</p>
+                </div>
+                <div class="stat-card">
+                    <h4>Servidores</h4>
+                    <p id="total-servers">0</p>
+                </div>
+            </div>
+        </section>
+        <section class="points-management">
+            <h3>Gerenciamento de Bate-Pontos</h3>
+            <div class="controls">
+                <input type="text" id="search-points" placeholder="Pesquisar pontos..." aria-label="Pesquisar pontos">
+                <select id="points-server-filter" aria-label="Filtrar por servidor">
+                    <option value="">Todos os Servidores</option>
+                </select>
+            </div>
+            <table id="points-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('points-table', 0)">Data</th>
+                        <th onclick="sortTable('points-table', 1)">Usuário</th>
+                        <th onclick="sortTable('points-table', 2)">Servidor</th>
+                        <th onclick="sortTable('points-table', 3)">Ação</th>
+                        <th onclick="sortTable('points-table', 4)">Duração</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="points-list"></tbody>
+            </table>
+        </section>
+        <section class="servers-management">
+            <h3>Gerenciamento de Servidores</h3>
+            <div class="controls">
+                <input type="text" id="search-servers" placeholder="Pesquisar servidores..." aria-label="Pesquisar servidores">
+                <button onclick="openCreateServerModal()" class="btn btn-primary">Adicionar Servidor</button>
+            </div>
+            <table id="servers-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('servers-table', 0)">Nome</th>
+                        <th onclick="sortTable('servers-table', 1)">ID do Servidor</th>
+                        <th onclick="sortTable('servers-table', 2)">Proprietário</th>
+                        <th onclick="sortTable('servers-table', 3)">Administradores</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="servers-list"></tbody>
+            </table>
+        </section>
+        <section class="users-management">
+            <h3>Gerenciamento de Usuários</h3>
+            <div class="controls">
+                <input type="text" id="search-users" placeholder="Pesquisar usuários..." aria-label="Pesquisar usuários">
+            </div>
+            <table id="users-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('users-table', 0)">Nome</th>
+                        <th onclick="sortTable('users-table', 1)">ID do Discord</th>
+                        <th onclick="sortTable('users-table', 2)">Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="users-list"></tbody>
+            </table>
+        </section>
+        <div id="create-server-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('create-server-modal')">×</span>
+                <h2>Adicionar Servidor</h2>
+                <form id="create-server-form">
+                    <input type="text" id="server-name" placeholder="Nome do Servidor" required aria-label="Nome do Servidor">
+                    <input type="text" id="server-id" placeholder="ID do Servidor" required aria-label="ID do Servidor">
+                    <input type="text" id="owner-id" placeholder="ID do Proprietário" required aria-label="ID do Proprietário">
+                    <input type="text" id="admin-ids" placeholder="IDs dos Administradores (separados por vírgula)" aria-label="IDs dos Administradores">
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                </form>
+            </div>
+        </div>
+        <div id="edit-server-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('edit-server-modal')">×</span>
+                <h2>Editar Servidor</h2>
+                <form id="edit-server-form">
+                    <input type="hidden" id="edit-server-id">
+                    <input type="text" id="edit-server-name" placeholder="Nome do Servidor" required aria-label="Nome do Servidor">
+                    <input type="text" id="edit-owner-id" placeholder="ID do Proprietário" required aria-label="ID do Proprietário">
+                    <input type="text" id="edit-admin-ids" placeholder="IDs dos Administradores (separados por vírgula)" aria-label="IDs dos Administradores">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="/js/scripts.js"></script>
+    <script>
+        fetchAdminData();
+        updateSEOMetaTags({
+            title: "Dashboard do Administrador - BatePonto Web Premium",
+            description: "Gerencie servidores, usuários e bate-pontos no BatePonto Web Premium como administrador.",
+            keywords: "dashboard, administrador, servidores, usuarios, ponto web, discord, rede bots, premium"
+        });
+        initializeThemeToggle();
+    </script>
+</body>
+</html>

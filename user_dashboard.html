@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Usuário - BatePonto Web Premium</title>
+    <meta name="description" content="Gerencie seus pontos, servidores e perfil no BatePonto Web Premium.">
+    <meta name="keywords" content="dashboard, usuario, ponto web, discord, rede bots, premium">
+    <meta name="author" content="Lucas Dev, Rede Bots">
+    <meta property="og:title" content="Dashboard do Usuário - BatePonto Web Premium">
+    <meta property="og:description" content="Acesse e gerencie seus pontos e servidores no BatePonto Web Premium.">
+    <meta property="og:url" content="https://bate-ponto-web.pages.dev/user_dashboard.html">
+    <meta property="og:image" content="https://bate-ponto-web.pages.dev/images/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://bate-ponto-web.pages.dev/images/logo.png">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="icon" href="/images/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-toggle">
+        <button id="theme-toggle-btn" aria-label="Alternar tema">🌙</button>
+    </div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <img src="/images/logo.png" alt="BatePonto Logo" class="sidebar-logo">
+            <h2>BatePonto</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/user_dashboard.html" class="sidebar-item active" aria-current="page">Dashboard</a>
+            <a href="/admin_dashboard.html" class="sidebar-item" id="admin-link" style="display: none;">Admin</a>
+            <button onclick="openSettingsModal()" class="sidebar-item">Configurações</button>
+            <button onclick="logout()" class="sidebar-item btn-logout">Sair</button>
+        </nav>
+    </div>
+    <aside class="ranking-panel">
+        <h3>Ranking Semanal</h3>
+        <ul id="weekly-ranking"></ul>
+    </aside>
+    <main class="main dashboard">
+        <header class="dashboard-header">
+            <h1>Dashboard do Usuário</h1>
+        </header>
+        <section class="profile">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <img id="avatar" src="/images/default-avatar.png" alt="Avatar do Usuário">
+                </div>
+                <h2 id="username"></h2>
+                <div class="profile-details">
+                    <p><strong>ID do Discord:</strong> <span id="discord_id"></span></p>
+                    <p><strong>Email:</strong> <span id="email"></span></p>
+                    <p><strong>Data de Criação:</strong> <span id="created_at"></span></p>
+                </div>
+                <button onclick="openEditProfileModal()" class="btn btn-primary">Editar Perfil</button>
+            </div>
+        </section>
+        <section class="points-controls">
+            <h3>Controle de Pontos</h3>
+            <div class="points-actions">
+                <select id="server-select" aria-label="Selecionar servidor">
+                    <option value="">Selecione um servidor</option>
+                </select>
+                <button onclick="openPoint()" class="btn btn-primary">Abrir Ponto</button>
+                <button onclick="pausePoint()" class="btn btn-warning">Pausar Ponto</button>
+                <button onclick="resumePoint()" class="btn btn-success">Retornar Ponto</button>
+                <button onclick="closePoint()" class="btn btn-danger">Encerrar Ponto</button>
+            </div>
+            <p><strong>Total Acumulado:</strong> <span id="total-hours">0 horas</span></p>
+        </section>
+        <section class="points-history">
+            <h3>Histórico de Bate-Pontos</h3>
+            <table id="points-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('points-table', 0)">Data</th>
+                        <th onclick="sortTable('points-table', 1)">Servidor</th>
+                        <th onclick="sortTable('points-table', 2)">Ação</th>
+                        <th onclick="sortTable('points-table', 3)">Duração</th>
+                    </tr>
+                </thead>
+                <tbody id="points-list"></tbody>
+            </table>
+        </section>
+        <section class="servers">
+            <h3>Meus Servidores</h3>
+            <table id="servers-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('servers-table', 0)">Nome</th>
+                        <th onclick="sortTable('servers-table', 1)">ID do Servidor</th>
+                        <th onclick="sortTable('servers-table', 2)">Cargo</th>
+                    </tr>
+                </thead>
+                <tbody id="servers-list"></tbody>
+            </table>
+        </section>
+        <div id="edit-profile-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('edit-profile-modal')">×</span>
+                <h2>Editar Perfil</h2>
+                <form id="edit-profile-form">
+                    <input type="text" id="edit-username" placeholder="Nome de Usuário" required aria-label="Nome de Usuário">
+                    <input type="email" id="edit-email" placeholder="Email" aria-label="Email">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+        <div id="settings-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal('settings-modal')">×</span>
+                <h2>Configurações</h2>
+                <label><input type="checkbox" id="notifications-enabled"> Ativar Notificações</label>
+                <button onclick="saveSettings()" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </main>
+    <script src="/js/scripts.js"></script>
+    <script>
+        fetchUserData();
+        fetchPointsHistory();
+        fetchUserServers();
+        fetchWeeklyRanking();
+        updateSEOMetaTags({
+            title: "Dashboard do Usuário - BatePonto Web Premium",
+            description: "Gerencie seus pontos, servidores e perfil no BatePonto Web Premium.",
+            keywords: "dashboard, usuario, ponto web, discord, rede bots, premium"
+        });
+        initializeThemeToggle();
+    </script>
+</body>
+</html>
